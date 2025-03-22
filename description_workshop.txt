@@ -1,0 +1,11 @@
+[h1]Introduction[/h1]
+
+Thai Language Library is language library mod for thai language.
+
+You can use this mod in modReferences for translate other mods.
+
+[b]Translation process: 75%[/b]
+[hr][/hr]
+[b] You can help us at [url=https://discord.gg/EZWusTF] Terraria {TH} Thai Localization [/url] [/b] 
+[hr][/hr]
+[b] Thank you for referral: [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3085000141] Extra Language! [/url] [/b]

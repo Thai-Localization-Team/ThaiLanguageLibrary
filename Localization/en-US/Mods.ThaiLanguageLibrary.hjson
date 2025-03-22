@@ -1,0 +1,45 @@
+Configs: {
+	Config: {
+		DisplayName: Config
+
+		Headers: {
+			AssetLoader: Asset Loader
+			TranslateTool: Translate Tool
+		}
+
+		ExternalAsset: {
+			Label: External Asset
+			Tooltip: load from external folder
+		}
+
+		ExportAsJson: {
+			Label: Export as json
+			Tooltip: Export localization file as json
+		}
+
+		UpdateExternalAsset: {
+			Label: Update External Asset
+			Tooltip: Update Asset in External folder
+		}
+	}
+
+	ExportAsJsonButton: {
+		Tooltip: Export localization file as json
+
+		Button: {
+			Label: Button
+			Tooltip: Button for Export as json
+		}
+	}
+
+	UpdateExternalAssetButton: {
+		Tooltip: Update Asset in External folder
+
+		Button: {
+			Label: Button
+			Tooltip: Button for Update External Asset
+		}
+	}
+}
+
+UI.Modlist: Mods list

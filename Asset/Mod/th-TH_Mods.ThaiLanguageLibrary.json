@@ -1,0 +1,43 @@
+{
+  "Configs": {
+    "Config": {
+      "DisplayName": "ตั้งค่า",
+      "Headers": {
+        "AssetLoader": "การโหลดองค์ประกอบ",
+        "TranslateTool": "เครื่องมือช่วยแปล"
+      },
+      "ExternalAsset": {
+        "Label": "การโหลดองค์ประกอบจากภายนอก",
+        "Tooltip": "โหลดองค์ประกอบจากโฟลเดอร์ภายนอก"
+      },
+      "ExportAsJson": {
+        "Label": "นำออกเป็นไฟล์ json",
+        "Tooltip": "นำออกไฟล์ภาษาเป็นรูปแบบไฟล์ json"
+      },
+      "UpdateExternalAsset": {
+        "Label": "อัพเดตองค์ประกอบภายนอก",
+        "Tooltip": "อัพเดตองค์ประกอบในโฟลเดอร์ภายนอก"
+      }
+    },
+    "ExportAsJsonButton": {
+      "Label": "นำออกเป็นไฟล์ json",
+      "Tooltip": "นำออกไฟล์ภาษาเป็นรูปแบบไฟล์ json",
+      "Button": {
+        "Label": "ปุ่ม",
+        "Tooltip": "ปุ่มสำหรับนำออกเป็นไฟล์ json"
+      }
+    },
+    "UpdateExternalAssetButton": {
+      "Label": "นำออกเป็นไฟล์ json",
+      "Tooltip": "อัพเดตองค์ประกอบในโฟลเดอร์ภายนอก",
+      "Button": {
+        "Label": "ปุ่ม",
+        "Tooltip": "ปุ่มสำหรับอัพเดตองค์ประกอบภายนอก"
+      }
+    }
+  },
+
+  "UI": {
+    "Modlist": "รายการมอด"
+  }
+}
