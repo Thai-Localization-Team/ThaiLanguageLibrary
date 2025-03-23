@@ -11,28 +11,29 @@ using System.Linq;
 using ThaiLanguageLibrary.Common.Config;
 using CsvHelper;
 using Newtonsoft.Json.Linq;
-using ReLogic.Content;
-using ReLogic.Graphics;
-using Terraria.GameContent;
 
 namespace ThaiLanguageLibrary
 {
 	public partial class ThaiLanguageLibrary : Mod
 	{
 
-        private static bool mouseHover = false;
         private static  readonly List<float> buttonState = [0.8f];
 
         private void LoadHooks()
 		{
-            IL_Main.DrawMenu += HookLanguageSelection;
+            if (!MoreLocales)
+            {
+                IL_Main.DrawMenu += HookLanguageSelection;
+            }
             On_LanguageManager.LoadActiveCultureTranslationsFromSources += HookLoadActiveCultureTranslationsFromSources;
 			On_LanguageManager.LoadFilesForCulture += HookLoadFilesForCulture;
         }
 
 		private void UnloadHooks()
 		{
-            IL_Main.DrawMenu -= HookLanguageSelection;
+            if (!MoreLocales) { 
+                IL_Main.DrawMenu -= HookLanguageSelection; 
+            }
             On_LanguageManager.LoadActiveCultureTranslationsFromSources -= HookLoadActiveCultureTranslationsFromSources;
             On_LanguageManager.LoadFilesForCulture -= HookLoadFilesForCulture;
         }
@@ -57,7 +58,10 @@ namespace ThaiLanguageLibrary
                 }
 				else
 				{
-                    LoadFromModAsset(self);
+                    if (!MoreLocales)
+                    {
+                        LoadFromModAsset(self);
+                    }
                     AddTranslations(this, [ "Asset/Mod/th-TH_Mods.ThaiLanguageLibrary.json" ]);
                 }
 

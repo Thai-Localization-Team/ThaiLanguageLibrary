@@ -36,17 +36,27 @@ namespace ThaiLanguageLibrary
         internal static Dictionary<string, string> ModdedKeys;
         private readonly static string[] IncompatibleModNames = {
             "ChineseLocalization",
-            "ExtraLanguage"
-        };
+            "ExtraLanguage",
+			"MoreLocales"
+		};
+        private bool MoreLocales = false;
 
 
-        public override void Load()
+		public override void Load()
         {
             foreach (Mod mod in ModLoader.Mods)
             {
                 if (IncompatibleModNames.Contains(mod.Name))
                 {
-                    throw new Exception($"Incompatible mod detected: {mod.Name}. Please unload it first before enabling this mod!");
+                    if (mod.Name == "MoreLocales")
+                    {
+						MoreLocales = true;
+
+					}
+                    else {
+						throw new Exception($"Incompatible mod detected: {mod.Name}. Please unload it first before enabling this mod!");
+					}
+                        
                 }
             }
 
@@ -81,34 +91,38 @@ namespace ThaiLanguageLibrary
                 File.WriteAllText(Path.Combine(AssetMods, fileMod.Split("/")[2]), fileText);
 				firstLoad = true;
 			}
-            ItemStack = FontAssets.ItemStack;
-            MouseText = FontAssets.MouseText;
-            DeathText = FontAssets.DeathText;
-            CombatText = FontAssets.CombatText;
-			FontAssets.ItemStack = Assets.Request<DynamicSpriteFont>("Asset/Fonts/Item_Stack", AssetRequestMode.ImmediateLoad);
-			FontAssets.MouseText = Assets.Request<DynamicSpriteFont>("Asset/Fonts/Mouse_Text", AssetRequestMode.ImmediateLoad);
-			FontAssets.DeathText = Assets.Request<DynamicSpriteFont>("Asset/Fonts/Death_Text", AssetRequestMode.ImmediateLoad);
-			FontAssets.CombatText[0] = Assets.Request<DynamicSpriteFont>("Asset/Fonts/Combat_Text", AssetRequestMode.ImmediateLoad);
-			FontAssets.CombatText[1] = Assets.Request<DynamicSpriteFont>("Asset/Fonts/Combat_Crit", AssetRequestMode.ImmediateLoad);
+            if (!MoreLocales) {
+				ItemStack = FontAssets.ItemStack;
+				MouseText = FontAssets.MouseText;
+				DeathText = FontAssets.DeathText;
+				CombatText = FontAssets.CombatText;
+				FontAssets.ItemStack = Assets.Request<DynamicSpriteFont>("Asset/Fonts/Item_Stack", AssetRequestMode.ImmediateLoad);
+				FontAssets.MouseText = Assets.Request<DynamicSpriteFont>("Asset/Fonts/Mouse_Text", AssetRequestMode.ImmediateLoad);
+				FontAssets.DeathText = Assets.Request<DynamicSpriteFont>("Asset/Fonts/Death_Text", AssetRequestMode.ImmediateLoad);
+				FontAssets.CombatText[0] = Assets.Request<DynamicSpriteFont>("Asset/Fonts/Combat_Text", AssetRequestMode.ImmediateLoad);
+				FontAssets.CombatText[1] = Assets.Request<DynamicSpriteFont>("Asset/Fonts/Combat_Crit", AssetRequestMode.ImmediateLoad);
+			}
 			ModdedKeys = [];
 
             var namedCulturesFieldInfo = typeof(GameCulture).GetField("_NamedCultures", BindingFlags.Static | BindingFlags.NonPublic);
             var namedCultures = (Dictionary<GameCulture.CultureName, GameCulture>)namedCulturesFieldInfo.GetValue(null);
 
-            var culture = GameCulture.FromName("th-TH");
 
 
             // When the culture doesn't exist, it will be returned English culture instead.
-            if (culture.LegacyId == 1)
-            {
-                culture = new GameCulture("th-TH", 10);
-            }
-            else
-            {
-                Logger.Debug($"ภาษาไทย (Thai) already exists, skipping");
-            }
-            namedCultures.Add((GameCulture.CultureName)10, culture);
-            namedCulturesFieldInfo.SetValue(null, namedCultures);
+            if (!MoreLocales) {
+				var culture = GameCulture.FromName("th-TH");
+				if (culture.LegacyId == 1)
+				{
+					culture = new GameCulture("th-TH", 10);
+				}
+				else
+				{
+					Logger.Debug($"ภาษาไทย (Thai) already exists, skipping");
+				}
+				namedCultures.Add((GameCulture.CultureName)10, culture);
+				namedCulturesFieldInfo.SetValue(null, namedCultures);
+			}
 
             Logger.Info("Loaded Thai Language Support!");
             LoadHooks();
@@ -128,11 +142,13 @@ namespace ThaiLanguageLibrary
             var namedCulturesFieldInfo = typeof(GameCulture).GetField("_NamedCultures", BindingFlags.Static | BindingFlags.NonPublic);
             namedCulturesFieldInfo.SetValue(null, dict);
 
-            FontAssets.ItemStack = ItemStack;
-            FontAssets.DeathText = DeathText;
-            FontAssets.MouseText = MouseText;
-            FontAssets.CombatText = CombatText;
-
+            if (!MoreLocales)
+            {
+				FontAssets.ItemStack = ItemStack;
+				FontAssets.DeathText = DeathText;
+				FontAssets.MouseText = MouseText;
+				FontAssets.CombatText = CombatText;
+			}
             ModdedKeys = null;
             base.Unload();
         }

@@ -1,5 +1,6 @@
 displayName = Thai Language Library(Beta)
 author = Thai Localization Team
-version = 0.9.10
+version = 0.10.1
 hideResources = true
 side = Client
+sortAfter = MoreLocales
