@@ -8,4 +8,14 @@ You can use this mod in modReferences for translate other mods.
 [hr][/hr]
 [b] You can help us at [url=https://discord.gg/EZWusTF] Terraria {TH} Thai Localization [/url] [/b] 
 [hr][/hr]
+Mod Call:
+[list]
+    [*]"AddTranslations" 
+    parameters:
+    [olist]
+        [*]Mod your_mod
+        [*]List<string> files
+    [/olist]
+[/list]
+[hr][/hr]
 [b] Thank you for referral: [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3085000141] Extra Language! [/url] [/b]

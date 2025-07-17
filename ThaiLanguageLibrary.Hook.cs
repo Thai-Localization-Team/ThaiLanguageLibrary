@@ -1,16 +1,17 @@
-using Terraria.ModLoader;
-using Terraria.Localization;
-using System.Reflection;
-using System;
-using Terraria;
-using System.Collections.Generic;
-using MonoMod.Cil;
-using System.IO;
-using ReLogic.Content.Sources;
-using System.Linq;
-using ThaiLanguageLibrary.Common.Config;
 using CsvHelper;
+using MonoMod.Cil;
+using MonoMod.RuntimeDetour.HookGen;
 using Newtonsoft.Json.Linq;
+using ReLogic.Content.Sources;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using Terraria;
+using Terraria.Localization;
+using Terraria.ModLoader;
+using ThaiLanguageLibrary.Common.Config;
 
 namespace ThaiLanguageLibrary
 {
@@ -18,10 +19,10 @@ namespace ThaiLanguageLibrary
 	{
 
         private static  readonly List<float> buttonState = [0.8f];
-
-        private void LoadHooks()
+		private void LoadHooks()
 		{
-            if (!MoreLocales)
+
+			if (!MoreLocales)
             {
                 IL_Main.DrawMenu += HookLanguageSelection;
             }
@@ -29,12 +30,13 @@ namespace ThaiLanguageLibrary
 			On_LanguageManager.LoadFilesForCulture += HookLoadFilesForCulture;
         }
 
+
 		private void UnloadHooks()
 		{
             if (!MoreLocales) { 
                 IL_Main.DrawMenu -= HookLanguageSelection; 
             }
-            On_LanguageManager.LoadActiveCultureTranslationsFromSources -= HookLoadActiveCultureTranslationsFromSources;
+			On_LanguageManager.LoadActiveCultureTranslationsFromSources -= HookLoadActiveCultureTranslationsFromSources;
             On_LanguageManager.LoadFilesForCulture -= HookLoadFilesForCulture;
         }
 
@@ -95,7 +97,7 @@ namespace ThaiLanguageLibrary
                     if (extension == ".json")
                     {
                         self.LoadLanguageFromFileTextJson(fileText, canCreateCategories: false);
-                    }
+					}
                     if (extension == ".csv")
                     {
                         self.LoadLanguageFromFileTextCsv(fileText);
@@ -205,16 +207,12 @@ namespace ThaiLanguageLibrary
                             string value = currentRecord[num2];
                             if (!string.IsNullOrWhiteSpace(text2) && !string.IsNullOrWhiteSpace(value))
                             {
-                                if (ModdedKeys.ContainsKey(text2))
+                                if (!ModdedKeys.TryAdd(text2, value))
                                 {
                                     ModdedKeys[text2] = value;
                                 }
-                                else
-                                {
-                                    ModdedKeys.Add(text2, value);
-                                }
-                            }
-                        }
+							}
+						}
                     }
                 }
             }
@@ -248,7 +246,7 @@ namespace ThaiLanguageLibrary
 
 
 
-        private static void HookLanguageSelection(ILContext il)
+        private void HookLanguageSelection(ILContext il)
 		{
 			try
 			{
@@ -257,11 +255,11 @@ namespace ThaiLanguageLibrary
                 var iLCursor = new ILCursor(il);
                 iLCursor.GotoNext(i => i.MatchLdstr("Language.Polish"));
 				iLCursor.GotoNext(i => i.MatchStelemRef());
-				iLCursor.Index += 1;
+                iLCursor.Index++;
 
-                // 497: Add Language to the list of languages
-                iLCursor.Emit(Mono.Cecil.Cil.OpCodes.Ldloc_S, (byte)26);
-				iLCursor.Emit(Mono.Cecil.Cil.OpCodes.Ldc_I4_S, (sbyte)10);
+				// 497: Add Language to the list of languages
+				iLCursor.Emit(Mono.Cecil.Cil.OpCodes.Ldloc_S, (byte)26);
+				iLCursor.Emit(Mono.Cecil.Cil.OpCodes.Ldc_I4_S, (sbyte)CultureId);
                 iLCursor.EmitDelegate<Func<string>>(() =>
                 {
                     return (LanguageManager.Instance.ActiveCulture.Name == "th-TH") ? "ภาษาไทย" : "ภาษาไทย (Thai)";

@@ -6,4 +6,11 @@ Translation process : 75%
 
 You can help us at  : Terraria {TH} Thai Localization (https://discord.gg/EZWusTF)
 
+Mod Call:
+- "AddTranslations"
+	parameters:
+		- Mod your_mod
+		- List<string> files
+
+
 Thank you for referral:  Extra Language! (https://steamcommunity.com/sharedfiles/filedetails/?id=3085000141) 
