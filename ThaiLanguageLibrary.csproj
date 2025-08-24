@@ -9,6 +9,7 @@
     <None Remove="description_workshop.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Asset\Temple Language Pack\Content\Localization\" />
     <Folder Include="Common\UI\Element\" />
   </ItemGroup>
 </Project>

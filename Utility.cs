@@ -30,7 +30,7 @@ namespace ThaiLanguageLibrary
                 var fileText = reader.ReadToEnd();
                 var jsonObject = HjsonValue.Parse(fileText).Qo();
 
-                var path = Path.Combine(ThaiLanguageLibrary.Export, entry.Name.Replace("hjson", "json"));
+                var path = Path.Combine(Path.Combine(ThaiLanguageLibrary.Export, "Localization"), entry.Name.Replace("hjson", "json"));
                 path = path.Replace("Localization", mod.Name);
                 dir = Path.GetDirectoryName(path);
                 Directory.CreateDirectory(dir);

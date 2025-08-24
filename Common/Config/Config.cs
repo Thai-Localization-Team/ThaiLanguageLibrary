@@ -7,6 +7,7 @@ using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
 using Terraria.ModLoader.Config.UI;
@@ -31,10 +32,39 @@ namespace ThaiLanguageLibrary.Common.Config
         [SeparatePage]
         public ExportAsJsonButton ExportAsJson { get; set; } = new();
 
-        [SeparatePage]
+		[SeparatePage]
+		public GenerateTempleButton GenerateTemple { get; set; } = new();
+
+		[SeparatePage]
         public UpdateExternalAssetButton UpdateExternalAsset { get; set; } = new();
 
-        public class ExportAsJsonButton()
+		public class GenerateTempleButton()
+		{
+			[CustomModConfigItem(typeof(GenerateTempleProcess))]
+			public int Button;
+		}
+		public class GenerateTempleProcess : FloatElement
+		{
+			public override void Draw(SpriteBatch spriteBatch)
+			{
+				var mod = ModContent.GetInstance<ThaiLanguageLibrary>();
+				var Temple = Directory.CreateDirectory(Path.Combine(ThaiLanguageLibrary.Export, "Temple Language Pack_" + Guid.NewGuid().ToString()));
+                Directory.CreateDirectory(Path.Combine(Temple.FullName, "Content", "Localization"));
+				using Stream stream = mod.GetFileStream("Asset/Temple Language Pack/pack.json");
+				using StreamReader streamReader = new(stream);
+				string fileText = streamReader.ReadToEnd();
+				File.WriteAllText(Path.Combine(Temple.FullName, "pack.json"), fileText);
+				ProcessStartInfo startInfo = new()
+				{
+					Arguments = Path.Combine(Temple.FullName, "pack.json"),
+					FileName = "notepad.exe"
+				};
+				SoundEngine.PlaySound(SoundID.MenuOpen);
+				Process.Start(startInfo);
+				Main.MenuUI.GoBack();
+			}
+		}
+		public class ExportAsJsonButton()
         {
             [CustomModConfigItem(typeof(ExportAsJsonProcess))]
             public int Button;
@@ -83,8 +113,8 @@ namespace ThaiLanguageLibrary.Common.Config
                 };
                 SoundEngine.PlaySound(SoundID.MenuOpen);
                 Process.Start(startInfo);
-                Main.MenuUI.GoBack();
-            }
+				Main.MenuUI.GoBack();
+			}
         }
     }
 }

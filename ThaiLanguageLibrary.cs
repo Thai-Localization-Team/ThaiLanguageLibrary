@@ -42,6 +42,7 @@ namespace ThaiLanguageLibrary
 
 		public static DirectoryInfo AssetDirectory;
         public static DirectoryInfo AssetModsDirectory;
+        public static DirectoryInfo ExportDirectory;
 
         internal static Dictionary<string, string> ModdedKeys;
         private readonly static string[] IncompatibleModNames = {
@@ -74,8 +75,9 @@ namespace ThaiLanguageLibrary
             Directory.CreateDirectory(MainDir);
             AssetDirectory = Directory.CreateDirectory(Asset);
             AssetModsDirectory = Directory.CreateDirectory(AssetMods);
+            ExportDirectory = Directory.CreateDirectory(Export);
 
-            foreach (String file in GetFileNames())
+			foreach (String file in GetFileNames())
             {
                 string extension = Path.GetExtension(file);
                 if (extension != ".json" && extension != ".csv")

@@ -21,6 +21,11 @@ Configs: {
 			Label: Update External Asset
 			Tooltip: Update Asset in External folder
 		}
+
+		GenerateTemple: {
+			Label: Generate Temple
+			Tooltip: Generate Temple Language Pack
+		}
 	}
 
 	ExportAsJsonButton: {
@@ -38,6 +43,15 @@ Configs: {
 		Button: {
 			Label: Button
 			Tooltip: Button for Update External Asset
+		}
+	}
+
+	GenerateTempleButton: {
+		Tooltip: ""
+
+		Button: {
+			Label: Button
+			Tooltip: ""
 		}
 	}
 }
