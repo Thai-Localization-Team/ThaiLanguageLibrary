@@ -13,7 +13,7 @@ Mod Call:
 		- List<string> files
 
 Wiki:
-- ภาษาไทย (https://docs.google.com/presentation/d/1fDwiUMLs8h9gK-zs7yMgtDwRbw_AoLb9NucoCPQMWYw/edit?usp=sharing)
+- Thai (https://docs.google.com/presentation/d/1fDwiUMLs8h9gK-zs7yMgtDwRbw_AoLb9NucoCPQMWYw/edit?usp=sharing)
 
 Thank you for referral:  Extra Language! (https://steamcommunity.com/sharedfiles/filedetails/?id=3085000141)
 
