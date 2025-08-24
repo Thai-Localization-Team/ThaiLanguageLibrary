@@ -18,4 +18,11 @@ Mod Call:
     [/olist]
 [/list]
 [hr][/hr]
+Wiki:
+[list]
+    [*][url=https://docs.google.com/presentation/d/1fDwiUMLs8h9gK-zs7yMgtDwRbw_AoLb9NucoCPQMWYw/edit?usp=sharing] ภาษาไทย [/url]
+[/list]
+[hr][/hr]
 [b] Thank you for referral: [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3085000141] Extra Language! [/url] [/b]
+[hr][/hr]
+[url=https://github.com/Thai-Localization-Team/ThaiLanguageLibrary] GitHub [/url]
