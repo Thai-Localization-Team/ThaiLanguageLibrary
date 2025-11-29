@@ -44,7 +44,7 @@ namespace ThaiLanguageLibrary
         public static DirectoryInfo AssetModsDirectory;
         public static DirectoryInfo ExportDirectory;
 
-        internal static Dictionary<string, string> ModdedKeys;
+        internal static Dictionary<string, string> ModdedKeys = [];
         private readonly static string[] IncompatibleModNames = {
             "ChineseLocalization",
             "ExtraLanguage",
@@ -132,7 +132,6 @@ namespace ThaiLanguageLibrary
                 FontAssets.CombatText[0] = Assets.Request<DynamicSpriteFont>("Asset/Fonts/Combat_Text", AssetRequestMode.ImmediateLoad);
                 FontAssets.CombatText[1] = Assets.Request<DynamicSpriteFont>("Asset/Fonts/Combat_Crit", AssetRequestMode.ImmediateLoad);
             }
-			ModdedKeys = [];
 
        
 
@@ -162,6 +161,7 @@ namespace ThaiLanguageLibrary
             base.Load();
         }
 
+
         public override void Unload()
         {
 			UnloadHooks();
@@ -188,7 +188,7 @@ namespace ThaiLanguageLibrary
 				FontAssets.MouseText = MouseText;
 				FontAssets.CombatText = CombatText;
 			}
-			ModdedKeys = null;
+			ModdedKeys = [];
 			base.Unload();
         }
 
@@ -360,7 +360,6 @@ namespace ThaiLanguageLibrary
 
         public static void UpdateModdedLocalizedTexts()
         {
-
             if (LanguageManager.Instance.ActiveCulture.Name != "th-TH")
             {
                 return;
@@ -370,11 +369,12 @@ namespace ThaiLanguageLibrary
             
             foreach (KeyValuePair<string, string> entry in ModdedKeys)
             {
+
                 LocalizedText txt = Language.GetText(entry.Key);
                 LocalizedText_SetValue.Invoke(txt, [entry.Value]);
 
             }
-        }
+		}
 
     }
 }

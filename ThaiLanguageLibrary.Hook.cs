@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -28,7 +29,8 @@ namespace ThaiLanguageLibrary
             }
             On_LanguageManager.LoadActiveCultureTranslationsFromSources += HookLoadActiveCultureTranslationsFromSources;
 			On_LanguageManager.LoadFilesForCulture += HookLoadFilesForCulture;
-        }
+            On_Main.Main_Exiting += OnMain_Exiting;
+		}
 
 
 		private void UnloadHooks()
@@ -38,11 +40,24 @@ namespace ThaiLanguageLibrary
             }
 			On_LanguageManager.LoadActiveCultureTranslationsFromSources -= HookLoadActiveCultureTranslationsFromSources;
             On_LanguageManager.LoadFilesForCulture -= HookLoadFilesForCulture;
-        }
+			On_Main.Main_Exiting -= OnMain_Exiting;
+		}
 
+		private void OnMain_Exiting(On_Main.orig_Main_Exiting orig, Main self, object sender, EventArgs e)
+		{
+			if (File.Exists(DataSave))
+			{
+				File.WriteAllBytes(DataSave, Encoding.ASCII.GetBytes(LanguageManager.Instance.ActiveCulture.Name + ";"));
+			}
+			else
+			{
+				var file = File.Create(DataSave);
+				file.Write(Encoding.ASCII.GetBytes("th-TH;"));
+			}
+			orig.Invoke(self, sender,e);
+		}
 
-
-        private void HookLoadFilesForCulture(On_LanguageManager.orig_LoadFilesForCulture orig, LanguageManager self, GameCulture culture)
+		private void HookLoadFilesForCulture(On_LanguageManager.orig_LoadFilesForCulture orig, LanguageManager self, GameCulture culture)
 		{
 			orig.Invoke(self, culture);
             UpdateModdedLocalizedTexts();
@@ -73,7 +88,7 @@ namespace ThaiLanguageLibrary
 			{
 				LoadFromPack(self);
 			}
-        }
+		}
 
 		private static void LoadFromPack(LanguageManager self)
 		{
@@ -291,7 +306,7 @@ namespace ThaiLanguageLibrary
 				iLCursor.Remove();
 				iLCursor.Emit(Mono.Cecil.Cil.OpCodes.Ldc_I4_S, (sbyte)(11));
 
-				// 527: Replace numButtons = 11 => numButtons = 11 + SupportedLanguages.Count
+				// 527: Replace numButtons = 11 
 				iLCursor.GotoNext(i => i.MatchLdcI4(11));
 				iLCursor.Remove();
 				iLCursor.Emit(Mono.Cecil.Cil.OpCodes.Ldc_I4_S, (sbyte)(12));
