@@ -1,4 +1,5 @@
 using CsvHelper;
+using log4net.Repository.Hierarchy;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ReLogic.Content;
@@ -326,7 +327,7 @@ namespace ThaiLanguageLibrary
             var dirPath = Path.GetDirectoryName(path);
             if (dirPath != null)
             {
-                foreach (string s in dirPath.Split('/'))
+                foreach (string s in dirPath.Split('/','\\'))
                 {
                     if (s.Contains('-'))
                     {
@@ -337,16 +338,23 @@ namespace ThaiLanguageLibrary
                 }
             }
             if (filePath != null) {
-                var array = filePath.Split('_');
+                var array = filePath.Split(['_','.']);
                 if (array[0].Contains('-'))
                 {
                     gameCulture = array[0];
-                    if (array.Length > 1)
-					{
+                    if (array.Length > 2)
+                    {
+						text = array[1];
+						for (int i = 2; i < array.Length; i++)
+                        {
+                            text += "." + array[i];
+                        }
+                    }
+                    else if (array.Length > 1) {
 						text = array[1];
 					}
                 }
-            }
+			}
 
             if (gameCulture != null)
             {
@@ -358,19 +366,20 @@ namespace ThaiLanguageLibrary
             }
         }
 
-        public static void UpdateModdedLocalizedTexts()
+        public void UpdateModdedLocalizedTexts()
         {
             if (LanguageManager.Instance.ActiveCulture.Name != "th-TH")
             {
                 return;
             }
 
+            
             MethodInfo LocalizedText_SetValue = typeof(LocalizedText).GetMethod("SetValue", BindingFlags.NonPublic | BindingFlags.Instance);
             
             foreach (KeyValuePair<string, string> entry in ModdedKeys)
             {
-
-                LocalizedText txt = Language.GetText(entry.Key);
+                Logger.Info($"Updating key: {entry.Key}");
+				LocalizedText txt = Language.GetText(entry.Key);
                 LocalizedText_SetValue.Invoke(txt, [entry.Value]);
 
             }

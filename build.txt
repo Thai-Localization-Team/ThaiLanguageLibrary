@@ -1,5 +1,5 @@
 displayName = Thai Language Library(Beta)
 author = Thai Localization Team
-version = 0.12.1
+version = 0.12.4
 side = Client
 sortAfter = MoreLocales
